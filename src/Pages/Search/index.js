@@ -1,7 +1,7 @@
 
 
-function Sreach() {
-    return <h1>Sreach Page</h1>;
+function Search() {
+    return <h1>Search Page</h1>;
 }
 
-export default Sreach;
+export default Search;
