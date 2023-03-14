@@ -29,6 +29,8 @@ import { Wrapper as PopperWrapper } from '~/Components/Popper';
 import AccountItem from '~/Components/AccountItem';
 import Button from '~/Components/Button';
 import Menu from '~/Components/Popper/Menu';
+import { MessageIcon, NotifyIcon } from '~/Components/Icons';
+import Image from '~/Components/Image';
 
 const cx = classNames.bind(styles);
 
@@ -84,9 +86,9 @@ const userMenu = [
         icon: <FontAwesomeIcon icon={faSignOut} />,
         title: 'Log out',
         to: '/logout',
-        seperate: true
+        seperate: true,
     },
-]
+];
 
 function Header() {
     const [searchResult, setsearchResult] = useState([]);
@@ -141,12 +143,20 @@ function Header() {
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
-                            <Tippy content="Upload Video" placement='bottom' delay={[0, 200]}>
+                            <Tippy content="Upload Video" placement="bottom" delay={[0, 200]}>
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload}/>
+                                    <FontAwesomeIcon icon={faCloudUpload} />
                                 </button>
-                            </Tippy >
-                            
+                            </Tippy>
+                            <Tippy content="Messages" placement="bottom" delay={[0, 200]}>
+                                <button className={cx('action-btn')}>
+                                    <MessageIcon />
+                                </button>
+                            </Tippy>
+
+                            <button className={cx('action-btn')}>
+                                <NotifyIcon />
+                            </button>
                         </>
                     ) : (
                         <>
@@ -154,23 +164,22 @@ function Header() {
                                 Upload
                             </Button>
                             <Button primary>Log in</Button>
-
                         </>
                     )}
-                            <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
-                                {currentUser ? (
-                                    <img 
-                                    src='https://i.pinimg.com/736x/c7/91/4f/c7914fe9d034a01769502de04c4a0e9b.jpg'
-                                    className={cx('user-avatar')} 
-                                    alt='Nguyen Van A' />
-
-                                ) : (
-
-                                    <button className={cx('more-btn')}>
-                                        <FontAwesomeIcon icon={faEllipsisVertical} />
-                                    </button>
-                                )}
-                            </Menu>
+                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {currentUser ? (
+                            <Image
+                                src="https://i.pinimg.com/736x/c7/91/4f/c7914fe9d034a01769502de04c4a0e9b.jpg"
+                                className={cx('user-avatar')}
+                                alt="Nguyen Van A"
+                                fallback='https://khoinguonsangtao.vn/wp-content/uploads/2022/08/hinh-anh-avatar-luffy-va-nen-troi-xanh.jpg'
+                            />
+                        ) : (
+                            <button className={cx('more-btn')}>
+                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </button>
+                        )}
+                    </Menu>
                 </div>
             </div>
         </header>
