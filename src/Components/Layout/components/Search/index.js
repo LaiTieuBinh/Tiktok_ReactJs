@@ -42,9 +42,11 @@ function Search() {
     }, [debounced]);
 
     const handleOnChangeInput = (e) => {
-        if (e.target.value.startsWith(' ')) {
+        const searchValue = e.target.value;
+
+        if (searchValue.startsWith(' ')) {
             if (searchValue != null) {
-                const position = parseInt(e.target.value.length);
+                const position = parseInt(searchValue.length);
                 inputRef.current.setSelectionRange(position, position);
             }
             return;
