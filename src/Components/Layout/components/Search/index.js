@@ -8,6 +8,7 @@ import styles from './Search.module.scss';
 import { Wrapper as PopperWrapper } from '~/Components/Popper';
 import AccountItem from '~/Components/AccountItem';
 import { useDebounce } from '~/Hooks';
+import * as searchServices from '~/apiServices/searchService';
 
 const cx = classNames.bind(styles);
 
@@ -24,18 +25,20 @@ function Search() {
     useEffect(() => {
         if (!debounced.trim()) {
             setSearchResult([]);
-            return
+
+            return;
         }
 
-        setLoading(true);
+        const fetchApi = async () => {
+            setLoading(true);
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => setLoading(false))
+            const result = await searchServices.search(debounced);
+
+            setSearchResult(result);
+            setLoading(false);
+        };
+
+        fetchApi();
     }, [debounced]);
 
     const handleOnChangeInput = (e) => {
@@ -43,7 +46,7 @@ function Search() {
             if (searchValue != null) {
                 const position = parseInt(e.target.value.length);
                 inputRef.current.setSelectionRange(position, position);
-            } 
+            }
             return;
         } else {
             setSearchValue(e.target.value);
@@ -91,8 +94,8 @@ function Search() {
                         <button className={cx('clear')} onClick={handleClear}>
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
-                    )} 
-                    { loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> }
+                    )}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
                     <button className={cx('search-btn')}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
