@@ -4,12 +4,13 @@ import classNames from 'classnames/bind';
 import styles from './AccountItem.module.scss';
 import Image from '../Image';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
 function AccountItem({ data }) {
     return (
-        <Link to={`/@/${data.nickname}`}  className={cx('wrapper')}>
+        <Link to={`/@/${data.nickname}`} className={cx('wrapper')}>
             <Image alt={data.full_name} className={cx('avatar')} src={data.avatar} />
             <div className={cx('info')}>
                 <h4 className={cx('name')}>
@@ -21,5 +22,9 @@ function AccountItem({ data }) {
         </Link>
     );
 }
+
+AccountItem.propTypes = {
+    data: PropTypes.object,
+};
 
 export default AccountItem;

@@ -1,10 +1,11 @@
-import classNames from "classnames/bind";
-import styles from "./Button.module.scss";
-import { Link } from "react-router-dom";
+import classNames from 'classnames/bind';
+import styles from './Button.module.scss';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-function Button({ 
+function Button({
     to,
     href,
     children,
@@ -19,9 +20,8 @@ function Button({
     leftIcon,
     rightIcon,
     onClick,
-    ...passProps 
+    ...passProps
 }) {
-
     let Comp = 'button';
     const classes = cx('wrapper', {
         primary,
@@ -35,33 +35,37 @@ function Button({
     });
     const props = {
         onClick,
-        ...passProps
-    }
+        ...passProps,
+    };
 
-    // Remove event listener when btn is disabled 
-    if(disabled) {
+    // Remove event listener when btn is disabled
+    if (disabled) {
         Object.keys(props).forEach((key) => {
-            if(key.startsWith('on') && typeof props[key] === 'function') {
+            if (key.startsWith('on') && typeof props[key] === 'function') {
                 delete props[key];
             }
         });
     }
 
-    if(to) {
+    if (to) {
         props.to = to;
         Comp = Link;
-    } else if(href) {
+    } else if (href) {
         props.href = href;
         Comp = 'a';
     }
-        
-    return ( 
+
+    return (
         <Comp className={classes} {...props}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
             <span className={cx('title')}>{children}</span>
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>
-     );
+    );
 }
+
+Button.prototype = {
+    children: PropTypes.node.isRequired,
+};
 
 export default Button;
