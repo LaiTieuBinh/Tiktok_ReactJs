@@ -66,9 +66,11 @@ function Search() {
     };
 
     return (
-        <div>
+        
+        // <div>
             <HeadlessTippy
                 interactive
+                appendTo={() => document.body}
                 visible={showResult && searchResult.length > 0}
                 onClickOutside={handleHideResult}
                 render={(attrs) => (
@@ -91,20 +93,20 @@ function Search() {
                         onChange={handleOnChangeInput}
                         onFocus={() => setShowResult(true)}
                     />
-
+    
                     {!!searchValue && !loading && (
                         <button className={cx('clear')} onClick={handleClear}>
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-
+    
                     <button className={cx('search-btn')}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </button>
                 </div>
             </HeadlessTippy>
-        </div>
+        // </div>
     );
 }
 
